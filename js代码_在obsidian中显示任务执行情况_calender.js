@@ -200,6 +200,9 @@ for (let month = 1; month <= currentMonth; month++) {
         } else if (dateStatus[dateStr] === 'failed') {
             char = '❌';
             bg = '#fff';
+        } else if (dateStr === today) {
+            char = '❓';  // 今天未完成显示问号
+            bg = '#fff';
         } else {
             char = '';
             bg = '#fff';
