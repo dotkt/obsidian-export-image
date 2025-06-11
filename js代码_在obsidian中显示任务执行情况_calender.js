@@ -80,10 +80,17 @@ let dateStatus = {}; // { 'YYYY-MM-DD': 'done' | 'failed' }
 const today = window.moment().format('YYYY-MM-DD');
 for (let line of lines) {
     // 新正则，适配你的数据格式
-    let match = line.match(/#(todo|failed).*?📅 (\d{4}-\d{2}-\d{2})/);
+    let match = line.match(/- \[(x| )\] #(todo|failed).*?📅 (\d{4}-\d{2}-\d{2})/);
     if (!match) continue;
-    let status = match[1] === 'todo' ? 'done' : 'failed';
-    let date = match[2];
+    let check = match[1];
+    let tag = match[2];
+    let date = match[3];
+    let status = '';
+    if (check === 'x' && tag === 'todo') {
+        status = 'done';
+    } else if (check === 'x' && tag === 'failed') {
+        status = 'failed';
+    } // 其他情况 status 保持空白
     if (date.startsWith(year + '-')) {
         dateStatus[date] = status;
         // console.log(`【DEBUG】解析到：${date} 状态：${status}`);
