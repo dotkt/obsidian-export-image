@@ -1,5 +1,5 @@
 // ===== 可调节的参数 =====
-async function renderCalendar({dv, filePath}) {
+async function renderCalendar({dv, filePath, title = ''}) {
     // 你可以把前面那段完整的渲染代码粘贴到这里
     // 只需把所有的 let/const STYLE = ... 换成 style = style || 默认值
     // 把 filePath, year 作为参数传进来
@@ -20,6 +20,13 @@ const STYLE = {
         margin: '10px 0',         // 原5px 0
         backgroundColor: '#f6f8fa',
         borderRadius: '8px',      // 原4px
+    },
+    title: {
+        fontSize: '16px',
+        fontWeight: 'bold',
+        marginBottom: '8px',
+        textAlign: 'center',
+        color: '#333',
     },
     rowLabel: {
         fontSize: '13px',         // 原8px
@@ -96,6 +103,19 @@ container.style.cssText = `
     text-align: left;
     display: inline-block;
 `;
+
+// ===== 创建标题栏 =====
+if (title) {
+    const titleDiv = dv.el("div", title, {cls: "calendar-title"});
+    titleDiv.style.cssText = `
+        font-size: ${STYLE.title.fontSize};
+        font-weight: ${STYLE.title.fontWeight};
+        margin-bottom: ${STYLE.title.marginBottom};
+        text-align: ${STYLE.title.textAlign};
+        color: ${STYLE.title.color};
+    `;
+    container.appendChild(titleDiv);
+}
 
 // ===== 创建数字行 =====
 const numbersRow = dv.el("div", "", {cls: "numbers-row"});
